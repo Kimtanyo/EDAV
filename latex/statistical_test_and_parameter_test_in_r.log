@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.5.18)  26 OCT 2021 03:44
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.5.18)  26 OCT 2021 04:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"community contribution.tex"
-(./community contribution.tex
+**statistical_test_and_parameter_test_in_r.tex
+(./statistical_test_and_parameter_test_in_r.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18>
 (d:/Program Files (x86)/texlive/2021/texmf-dist/tex/latex/base/article.cls
@@ -683,8 +683,9 @@ File: l3backend-xetex.def 2021-03-18 L3 backend support: XeTeX
 \g__pdf_backend_object_int=\count309
 \g__pdf_backend_annotation_int=\count310
 \g__pdf_backend_link_int=\count311
-) (./community contribution.aux)
-\openout1 = `"community contribution.aux"'.
+)
+(./statistical_test_and_parameter_test_in_r.aux)
+\openout1 = `statistical_test_and_parameter_test_in_r.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
@@ -1066,14 +1067,14 @@ Overfull \hbox (2.09277pt too wide) in paragraph at lines 324--325
 [][] 
  []
 
-[2] (./community contribution.aux) ) 
+[2] (./statistical_test_and_parameter_test_in_r.aux) ) 
 Here is how much of TeX's memory you used:
  15671 strings out of 476919
- 314278 string characters out of 5816464
- 656659 words of memory out of 5000000
+ 314458 string characters out of 5816464
+ 656691 words of memory out of 5000000
  35374 multiletter control sequences out of 15000+600000
  405370 words of font info for 43 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 113i,13n,116p,435b,1389s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 113i,13n,116p,451b,1389s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on community contribution.pdf (2 pages).
+Output written on statistical_test_and_parameter_test_in_r.pdf (2 pages).
