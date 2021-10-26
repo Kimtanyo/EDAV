@@ -1,0 +1,325 @@
+
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{bigints}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xhfill}
+\makeatletter
+
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+\title{física eléctrica}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+%cambios de unidades (pt, mm, cm,ex,em,bp,dd,pc,sp) https://tex.stackexchange.com/questions/8260/what-are-the-various-units-ex-em-in-pt-bp-dd-pc-expressed-in-mm
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip2pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+\newcommand{\nc}[2][]{%
+	\tikz \draw [draw=black, ultra thick, #1]
+	($(current page.center)-(0.5\linewidth,0)$) -- 
+	($(current page.center)+(0.5\linewidth,0)$)
+	node [midway, fill=white] {#2};
+}% tomado de https://tex.stackexchange.com/questions/179425/a-new-command-of-the-form-tex
+\begin{document}
+	
+	\begin{center}{\huge{\textbf{Statistical Tests and Parameter Estimations in R}}}
+	
+	Candong Chen cc4766\\
+	\end{center}
+	\begin{multicols*}{3}
+		
+		\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+		rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+		\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+		
+		%--------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					%\addtolength{\itemsep}{-2pt}
+					\begin{itemize}
+						\item List the estimations $$E[X^k]=g_k(\theta_1,\cdots,\theta_m),k=1,\cdots,m$$
+						\item Solve the equation set $$\theta_k=\theta_k(E[X],E[X^2],\cdots,E[X^m])$$
+						\item Replace $E[X^k]$ with $M_k=\frac{1}{n}\sum_{i=1}^{n}X_{i}^{n}$, we get the moment estimations $$\hat{\theta}_{k}=\theta_{k}(M_1,\cdots,M_m)$$
+					\end{itemize}
+					
+					{\tt rootSolve::multiroot(f, start, maxiter = 100)}\\
+					
+					Given n (nonli­near) equations, we use multiroot to solve for n roots.
+					
+					1. {\bf f} is the euqation set w.r.t. estima­tors.
+					
+					2. {\bf start} is the initial guesses for unknown variables of {\bf f}.
+					
+					3. {\bf maxiter} is maximal number of iterations allowed.
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) {Moment Estimation};
+		\end{tikzpicture}
+		
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					\begin{itemize}
+						\item 
+						Build likelihood function $$L=P(X_1=x_1,\cdots,X_n=x_n)=\Pi_{i=1}^{n}f(x_{i};\theta)$$
+						
+						\item MLE of $\theta$ is $\hat{\theta}=\arg\max_{\theta} \log L$
+						
+						\item Solve the equation $\frac{d\log L}{d\theta}=0$ and verify if $\frac{d^2 \log L}{d\theta^2}<0$
+					\end{itemize}
+					{\tt op­tim­­(par, fn, method = c("N­­el­d­e­r-­­Mea­­d", "­­BF­G­S­", "­­CG­", "­­L-­B­F­GS­­-B", "­­SA­N­N­", "­­Br­e­n­t"), lower = -Inf, upper = Inf)}\\
+					
+					1. {\bf optim} calculates maximum likelihood estimates for multiple parameters distri­but­ions.
+					
+					2. {\bf par} sets the initial value of parame­ter.
+					
+					3. {\bf fn} is the likelihood function.
+					
+					4. {\bf method} provides six ways to calculate extremum.
+					
+					5. {\bf lower} and {\bf upper} are the lower and upper bounds of parameters respec­tively
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) {MLE};
+		\end{tikzpicture}
+		
+		%---------------------------
+		
+		
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					$L(\theta;X)=\int p(Z|X,\theta)p(X|\theta)$
+					
+					Iteratively applying these two steps:
+					\begin{itemize}
+						
+						\item Expectation step (E step): $$Q(\theta|\theta^{(t)})=E_{Z|X,\theta^{(t)}}[\log L(\theta;X,Z)]$$
+						\item Maximization step (M step): $$\theta^{(t+1)}=\arg\max_{\theta}Q(\theta|\theta^{(t)})$$
+						
+					\end{itemize}
+					{\tt mclust­­::­M­c­lu­­st(­­data, G = NULL, modelNames = NULL, prior = NULL, control = emCont­­rol(), initia­­li­z­ation = NULL)}\\
+					
+					1. {\bf G} specifies the number of catego­rie­s.The default is G=1:9.
+					
+					2. {\bf modelNames} specifies the fitting model during the EM algorithm.
+					
+					3. {\bf prior} allows specif­ication of a conjugate prior on the means and variances through the function priorC­ontrol.
+					
+					4. {\bf control} specifies the control parameters for the EM algorithm.
+				\end{minipage}
+			};
+			%------------ campo titulo---------------------
+			\node[fancytitle, right=10pt] at (box.north west) {EM Algorithm};
+		\end{tikzpicture}
+		%---------------------------------
+		%\bigskip
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					\begin{tabular}{ll}
+						Empirical Distribution & {\tt ecdf(x)}\\
+						Histogram & {\tt hi­st(x, breaks)}\\
+						KDE & {\tt density(x, bw = "nrd0",}\\
+						 & {\tt adjust, kernel})\\
+					\end{tabular}
+				
+					In KDE:
+					
+					1. {\bf bw} is the smoothing bandwidth to be used.
+					
+					2. the bandwidth used is actually {\bf adjust*bw}.
+					
+					3. {\bf kernel} specifies the smoothing kernel to be used.
+					
+				\end{minipage}
+			};
+			%------------ potencial titulo  ---------------------
+			\node[fancytitle, right=10pt] at (box.north west) {Distribution Estimation};
+		\end{tikzpicture}
+		
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					\nc{Normal Distribution}
+					t test (mean):
+					
+					{\tt t.test(x, y=NULL, altern­ati­ve=­c("t­wo.s­id­ed",­"­les­s","g­rea­ter­"), mu=0, paired­=FALSE, var.eq­ual­=FALSE, conf.l­eve­l=0.95)	}\\
+					
+					F test (variance):
+					
+					{\tt var.te­st(x, y, ratio = 1, altern­ative = c("t­wo.s­id­ed", "­les­s", "­gre­ate­r"), conf.level = 0.95)}
+					
+					\nc{Binomial Distribution}
+					binomial test(p):
+					
+					{\tt binom.t­est(x, n, p = 0.5, altern­ative = c("t­wo.s­id­ed", "­les­s", "­gre­ate­r"), conf.level = 0.95)}
+					
+					
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) {Parametric Test};
+		\end{tikzpicture}
+		
+		%\bigskip\\
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					{\tt cor.test(x, y, alternative = c("two.sided", "less", "greater"), method = c("pearson", "kendall", "spearman"), exact = NULL, conf.level = 0.95, ...)}\\
+					
+					1. Pearson's correlation coefficient has a precondition that x and y are
+					normally distributed.
+					
+					2. Spearman's correlation coefficient is used for continuous variables.
+					
+					3. Kendall's correlation coefficient is used for ordinal categorical variables.
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) {Bivariate Correlation Test};
+		\end{tikzpicture}
+		
+		%\bigskip\\
+		%---------------------------
+
+		%---------------------------------
+
+		
+		%\bigskip\\
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					\nc{Pearson's chi-sq­uared test}
+					{\tt chisq.t­est(x, y = NULL, correct = TRUE, p = rep(1/­len­gth(x), length­(x)), rescale.p = FALSE}\\
+					
+					which is used to test if x and y have the same distri­bution.
+					
+					1. {\bf correct} is a logical variable that indicates whether it is used for continuous correction.
+					
+					2. {\bf p} is the theoretical probability that the original hypothesis
+					falls in the intervals, and the default value represents uniform distri‐
+					bution.
+					
+					3. {\bf rescale.p} is a logical variable. FALSE (default) requires that sum of the input {\bf p} equals 1.  When TRUE is selected, this condition is not required and the program recalculates the {\bf p} value.
+					
+					\nc{Shapirowilk test}
+					{\tt shapiro.test(x)}\\
+					
+					which is used to test if x is normally distributed.
+					
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) {Nonparametric Test (completely known)};
+		\end{tikzpicture}
+		
+		%\bigskip\\
+		%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					\nc{Kolmogorov-Smirnov test}
+					{\tt ks.test(x, y, ..., alternative = c("two.sided", "less", "greater"), exact = NULL)}\\
+					
+					which is used to test if x and y have the same distri­bution.
+					
+					1. {\bf y} can be either data or a character string specifying distribution such as {\bf ''pnorm''} or {\bf ''pexp''}.
+					
+					2. {\bf ...} are parameters of the distribution specified (as a character string) by y.
+					
+					3. {\bf exact} is a logical indicating whether an exact p-value should be computed.
+					
+					\nc{Contingency table test}
+					To test if the two columns in x are independent\\
+					
+					{\tt chisq.test(x, correct = False)}\\
+
+					the minimum theoretical frequency: $T$ 
+					
+					the total frequency: $N$\\
+					
+					Pearson's chi-squared test can be used only if $T\geq 5$ and $N\geq 40$.\\
+					
+					{\tt chisq.test(x,correct = True)}\\
+					
+					Pearson's chi-squared modified test should be used if $1\leq T<5$ and $N\geq 40$.\\
+					
+					{\tt fisher.test(x, alternative =''two.sided''}\\
+					
+					Fisher exact test should be used if $T<1$ or $N<40$.
+					
+
+					
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) {Nonparametric Test (unknown parameters)};
+		\end{tikzpicture}
+	
+			%\bigskip\\
+			%---------------------------
+		\begin{tikzpicture}
+			\node [mybox] (box){%
+				\begin{minipage}{0.3\textwidth}
+					\nc{Sign test}
+					{\tt binom.test(sum(x>M), length(x), alternative = c("less", "greater"), conf.level=0.95)}\\
+					
+					which is used to test if the median
+					of X is greater (less) than M.\\
+					
+					In the sign test method, only the number of symbols is counted, without considering the magnitude of the absolute value of each sign difference.
+					
+					\nc{Wilcoxon signed-rank test (univariate)}
+					{\tt wilcox.test(x, mu=M, alternative = c("two.sided", "less", "greater"), exact=FALSE, correct=FALSE)}\\
+					
+					which is used to test if the median of x is equal (greater or less) to M.
+					
+					\nc{Wilcoxon signed-rank test (multivariate)}
+					{\tt wilcox.test(x, y, alternative = c("two.sided", "less", "greater"), paired = TRUE, correct = TRUE, conf.level = 0.95)}\\
+					
+					which is used to test if the median of x is equal (greater or less) to the median of y.
+					
+					
+				\end{minipage}
+			};
+			%---------------------------------
+			\node[fancytitle, right=10pt] at (box.north west) 	{Nonparametric Test (completely known)};
+		\end{tikzpicture}	
+	\end{multicols*}
+\end{document}
+
+
